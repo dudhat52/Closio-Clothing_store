@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*************************************************************************************
 * WEB322 - 2251 Project
 * I declare that this assignment is my own work in accordance with the Seneca Academic
@@ -49,7 +50,9 @@ function onHttpStart() {
   
 // Listen on port 8080. The default port for http is 80, https is 443. We use 8080 here
 // because sometimes port 80 is in use by other applications on the machine
-app.listen(HTTP_PORT, onHttpStart);const express = require('express');
+app.listen(HTTP_PORT, onHttpStart);
+=======
+const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const productUtil = require('./modules/product-util').default;
@@ -98,3 +101,4 @@ app.get('/inventory', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running: http://localhost:${port}`);
 });
+>>>>>>> f64517c (updated file with new changes)
