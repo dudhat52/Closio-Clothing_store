@@ -1,0 +1,63 @@
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="red-box"></div>
+    <div class="hero-content">
+        <h1>END OF SEASON</h1>
+        <div class="buttons">
+            <button>Women's Apparel</button>
+            <button>Handbags</button>
+        </div>
+    </div>
+</div>
+
+<div class="carousel">
+    <div class="carousel">
+        <div class="carousel-item">
+          <img src="assets/Images/Outwear-1.avif" alt="Women's Outerwear">
+          <div class="label">Women's Outerwear</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Handbags-1.avif" alt="Handbags">
+          <div class="label">Handbags</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Denim-1.avif" alt="Women's Denim">
+          <div class="label">Women's Denim</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Sweater-1.avif" alt="Women's Sweaters">
+          <div class="label">Women's Sweaters</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Shoes-1.avif" alt="Women's Shoes">
+          <div class="label">Women's Shoes</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Dress-1.avif" alt="Dresses & Jumpsuits">
+          <div class="label">Dresses & Jumpsuits</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Apparel-1.avif" alt="Dresses & Jumpsuits">
+          <div class="label">Dresses & Jumpsuits</div>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/Images/Men-1.avif" alt="Dresses & Jumpsuits">
+          <div class="label">Dresses & Jumpsuits</div>
+        </div>
+      </div>
+</div>
+
+<div class="container">
+    <div class="img-box"></div>
+    <div class="img-content">
+        <h1>NEXT IN DENIM</h1>
+    </div>
+</div>
+
+<h3>Don't Miss Out on These Picks</h3>
+
+<div class="product-list">
+    <% featuredProducts.forEach(product => { %>
+        <%- include('partials/product', {product}) %>
+    <% }) %>
+</div>

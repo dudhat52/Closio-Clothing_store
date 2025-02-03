@@ -1,0 +1,14 @@
+<% layout('/views/layouts/main.ejs') -%>
+
+<div class="product-categories">
+    <% categories.forEach(category => { %>
+        <div class="category-section">
+            <h2><%= category.category %></h2>
+            <div class="product-grid">
+                <% category.products.forEach(product => { %>
+                    <%- include('partials/product', {product}) %>  <!-- Correct path -->
+                <% }) %>
+            </div>
+        </div>
+    <% }) %>
+</div>

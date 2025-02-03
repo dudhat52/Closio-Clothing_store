@@ -1,0 +1,12 @@
+<div class="product">
+    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    <div class="product-info">
+        <h2><%= product.title %></h2>
+        <% if(product.salePrice) { %>
+            <p>$<%= product.salePrice.toFixed(2) %> (<%= Math.round((1 - product.salePrice/product.price) * 100) %>% Off)</p>
+        <% } else { %>
+            <p>$<%= product.price.toFixed(2) %></p>
+        <% } %>
+        <button>Add +</button>
+    </div>
+</div>
