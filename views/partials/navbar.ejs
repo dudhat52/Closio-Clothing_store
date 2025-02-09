@@ -1,12 +1,8 @@
 <nav class="navbar">
-  <div class="logo"><span>CLOSIO</span></div>
-
-  <button class="hamburger" aria-label="Toggle navigation">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  </button>
-
+    <a href="/" class="logo">
+      <span>CLOSIO</span>
+    </a>
+  <!-- Hidden on mobile, shown when toggle button is clicked -->
   <ul class="nav-links">
     <li class="dropdown" data-dropdown="womenDropdown">
       Women
@@ -27,6 +23,7 @@
         </div>
       </div>
     </li>
+    <!-- Repeat for other dropdowns -->
     <li class="dropdown" data-dropdown="handbagsDropdown">
       Handbags
       <div class="dropdown-content" id="handbagsDropdown">
@@ -132,19 +129,12 @@
     </li>
   </ul>
   <div class="user-options">
-    Hi,<a href="/sign-up">Sign in or Register</a>
+      Hi,<a href="/log-in">Sign in</a>Or<a href="/sign-up">Register</a>
+    
     <select>
       <option>English</option>
       <option>French</option>
     </select>
-    <div class="icon-container">
-      <ion-icon name="search-outline"></ion-icon>
-    </div>
-    <div class="icon-container">
-      <ion-icon name="heart-outline"></ion-icon>
-    </div>
-    <div class="icon-container">
-      <ion-icon name="cart-outline"></ion-icon>
-    </div>
   </div>
+  </ul>
 </nav>
