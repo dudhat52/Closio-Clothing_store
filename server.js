@@ -13,7 +13,7 @@
 const path = require("path");
 const express = require("express");
 const expressLayouts = require('express-ejs-layouts');
-const productUtil = require('./modules/product-util').default;
+const productUtil = require('./Modules/product-util').default;
 
 const app = express(); 
 
