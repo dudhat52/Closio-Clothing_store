@@ -16,11 +16,10 @@ const expressLayouts = require('express-ejs-layouts');
 const productUtil = require('./Modules/product-util').default;
 
 const app = express(); 
-
-// Set up EJS and layouts
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/main');  
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public'));
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, 'public'))); 
 

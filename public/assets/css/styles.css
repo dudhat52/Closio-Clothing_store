@@ -323,6 +323,7 @@ h3 {
   scrollbar-width: none;
 }
 
+
 .product-list::-webkit-scrollbar {
   display: none;
 }

@@ -5,7 +5,7 @@
         <% if(product.salePrice) { %>
             <p>$<%= product.salePrice.toFixed(2) %> (<%= Math.round((1 - product.salePrice/product.price) * 100) %>% Off)</p>
         <% } else { %>
-            <p>$<%= product.price.toFixed(2) %></p>
+            <p>$<%= product.price.toFixed(2) %> else < </p>
         <% } %>
         <button>Add +</button>
     </div>
