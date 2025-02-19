@@ -10,12 +10,12 @@
 * Course/Section: WEB322/NFF
 *
 **************************************************************************************/
+const app = express(); 
 const path = require("path");
 const express = require("express");
 const expressLayouts = require('express-ejs-layouts');
 const productUtil = require('./Modules/product-util').default;
 
-const app = express(); 
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/main');  
 app.set('views', path.join(__dirname, 'views'));
@@ -46,16 +46,13 @@ app.get('/inventory', (req, res) => {
     });
 });
 
-// 404 Handler
-app.use((req, res) => {
-    res.status(404).send("Page Not Found");
+// This use() will add an error handler function to
+// catch all errors.
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send("Something broke!")
 });
 
-// Error Handler
-app.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
-});
 
 // *** DO NOT MODIFY THE LINES BELOW ***
 
