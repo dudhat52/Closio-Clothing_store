@@ -131,17 +131,20 @@ const products = [
     }
 ];
 
+// Function to get all products
 function getAllProducts() {
     return products;
 }
 
+// Function to get only featured products
 function getFeaturedProducts() {
     return products.filter(product => product.featured);
 }
 
-function getProductsByCategory(productsArray) {
+// Function to get products categorized
+function getProductsByCategory() {
     const categories = {};
-    productsArray.forEach(product => {
+    products.forEach(product => {
         if (!categories[product.category]) {
             categories[product.category] = [];
         }
@@ -153,7 +156,7 @@ function getProductsByCategory(productsArray) {
     }));
 }
 
-export default {
+module.exports = {
     getAllProducts,
     getFeaturedProducts,
     getProductsByCategory

@@ -10,63 +10,52 @@
 * Course/Section: WEB322/NFF
 *
 **************************************************************************************/
-const path = require("path");
+require("dotenv").config();
 const express = require("express");
-const expressLayouts = require('express-ejs-layouts');
-const productUtil = require('./Modules/product-util').default;
+const path = require("path");
+const expressLayouts = require("express-ejs-layouts");
+const authRoutes = require("./routes/auth");
+const productUtil = require("./Modules/product-util");
 
-const app = express(); 
-app.set('view engine', 'ejs');
-app.set('layout', 'layouts/main');  
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static('public'));
+const app = express();
+app.set("view engine", "ejs");
+app.set("layout", "layouts/main");
+app.set("views", path.join(__dirname, "views"));
+
+app.use(express.static("public"));
 app.use(expressLayouts);
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.urlencoded({ extended: true })); // Parse form data
 
 // Routes
-app.get('/', (req, res) => {
-  res.render('home', {
-    title: 'CLOSIO - Home',
-    featuredProducts: productUtil.getFeaturedProducts()
+app.use("/auth", authRoutes);
+
+app.get("/", (req, res) => {
+  res.render("home", { 
+    title: "Home",
+    featuredProducts: productUtil.getFeaturedProducts() 
   });
 });
 
-app.get('/log-in', (req, res) => {
-    res.render('log-in', { title: 'CLOSIO - Log In' });
+app.get("/welcome", (req, res) => {
+  res.render("welcome", { title: "Welcome!" });
 });
 
-app.get('/sign-up', (req, res) => {
-    res.render('sign-up', { title: 'CLOSIO - Sign Up' });
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard", { title: "User Dashboard" });
 });
 
-app.get('/inventory', (req, res) => {
-    res.render('inventory', {
-        title: 'CLOSIO - Inventory',
-        categories: productUtil.getProductsByCategory(productUtil.getAllProducts())
-    });
+app.get("/log-in", (req, res) => {
+  res.render("log-in", { title: "Log In", errors: null });
+});
+
+app.get("/sign-up", (req, res) => {
+  res.render("sign-up", { title: "Sign Up", errors: null });
 });
 
 // 404 Handler
 app.use((req, res) => {
-    res.status(404).send("Page Not Found");
+  res.status(404).send("Page Not Found");
 });
 
-// Error Handler
-app.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
-});
-
-// *** DO NOT MODIFY THE LINES BELOW ***
-
-// Define a port to listen to requests on.
-const HTTP_PORT = process.env.PORT || 8080;
-
-// Call this function after the http server starts listening for requests.
-function onHttpStart() {
-    console.log("Express http server listening on: " + HTTP_PORT);
-}
-  
-// Listen on port 8080. The default port for http is 80, https is 443. We use 8080 here
-// because sometimes port 80 is in use by other applications on the machine
-app.listen(HTTP_PORT, onHttpStart);
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

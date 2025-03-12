@@ -1,14 +1,48 @@
 <div class="auth-container">
-    <h2>Log In</h2>
-    <form class="auth-form">
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" required>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" required>
-        </div>
-        <button type="submit" class="auth-button">Log In</button>
-    </form>
-</div>  
+  <h2>Log In</h2>
+  <form id="loginForm" action="/auth/login" method="POST">
+    <div>
+      <input type="text" id="email" name="email" placeholder="Email" required>
+      <div id="emailError" style="color: red; font-size: 0.875rem;"></div>
+    </div>
+    <div>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <div id="passwordError" style="color: red; font-size: 0.875rem;"></div>
+    </div>
+    <button type="submit">Continue</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+
+    // Reset error messages
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    let isValid = true;
+
+    // Validate email
+    if (!emailRegex.test(email)) {
+      emailError.textContent = 'Please enter a valid email address.';
+      isValid = false;
+    }
+
+    // Validate password
+    if (!passwordRegex.test(password)) {
+      passwordError.textContent = 'Password must be 8 to 12 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one symbol.';
+      isValid = false;
+    }
+
+    // Prevent form submission if validation fails
+    if (!isValid) {
+      event.preventDefault();
+    }
+  });
+</script>
