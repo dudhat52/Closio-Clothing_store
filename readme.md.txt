@@ -12,4 +12,4 @@ Course/Section: WEB322/NFF
 
 ## Project URLs
 GitHub Repo   : https://github.com/dudhat52/web322-2251-dhdudhat
-Vercel Domain : https://<app_name>.vercel.app/
+Vercel Domain : https://web322-2251-dhdudhat.vercel.app/

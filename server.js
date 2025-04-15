@@ -1,63 +1,90 @@
-/*************************************************************************************
-* WEB322 - 2251 Project
-* I declare that this assignment is my own work in accordance with the Seneca Academic
-* Policy. No part of this assignment has been copied manually or electronically from
-* any other source (including web sites) or distributed to other students.
-*
-* Student Name  : Dish Dudhat
-* Student ID    : 143046233
-* Student Email : dhdudhat@myseneca.ca
-* Course/Section: WEB322/NFF
-*
-**************************************************************************************/
-require("dotenv").config();
+require('dotenv').config();
 const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
+const fileUpload = require("express-fileupload");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 const authRoutes = require("./routes/auth");
-const productUtil = require("./Modules/product-util");
+const inventoryRoutes = require("./routes/inventoryRoutes");
+const loadDataRoutes = require("./routes/loadDataRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const generalController = require("./controllers/generalController");
 
 const app = express();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ MongoDB connected"))
+    .catch(err => console.error("❌ MongoDB connection error:", err));
+
+// Set up EJS with layouts
 app.set("view engine", "ejs");
-app.set("layout", "layouts/main");
 app.set("views", path.join(__dirname, "views"));
-
-app.use(express.static(path.join(__dirname, "public")));
-
-
 app.use(expressLayouts);
-app.use(express.urlencoded({ extended: true })); // Parse form data
+app.set("layout", "layouts/main");
 
-// Routes
+// Serve static files
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
+
+// Body parsing middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(fileUpload());
+
+// Session configuration
+app.use(session({
+    secret: "secureSecret",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        ttl: 24 * 60 * 60 // Session TTL of 1 day
+    }),
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+    }
+}));
+
+// Make user data available to all views
+app.use((req, res, next) => {
+    console.log('Current session user:', req.session.user);
+    res.locals.user = req.session.user;
+    next();
+});
+
+// Auth routes should come first
 app.use("/auth", authRoutes);
 
-app.get("/", (req, res) => {
-  res.render("home", { 
-    title: "Home",
-    featuredProducts: productUtil.getFeaturedProducts() 
-  });
+// Protected routes
+app.use((req, res, next) => {
+    // Paths that don't require authentication
+    const publicPaths = ['/log-in', '/sign-up', '/'];
+    
+    if (!req.session.user && !publicPaths.includes(req.path)) {
+        return res.redirect('/auth/log-in');
+    }
+    next();
 });
 
-app.get("/welcome", (req, res) => {
-  res.render("welcome", { title: "Welcome!" });
-});
+// Routes
+app.use("/", generalController);
+app.use("/inventory", inventoryRoutes);
+app.use("/load-data", loadDataRoutes);
+app.use("/cart", cartRoutes);
 
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard", { title: "User Dashboard" });
-});
-
-app.get("/log-in", (req, res) => {
-  res.render("log-in", { title: "Log In", errors: null });
-});
-
-app.get("/sign-up", (req, res) => {
-  res.render("sign-up", { title: "Sign Up", errors: null });
-});
-
-// 404 Handler
+// 404 Handler - should be last
 app.use((req, res) => {
-  res.status(404).send("Page Not Found");
+    console.log('404 - Not Found:', req.path);
+    res.status(404).render('404', {
+        title: 'Page Not Found',
+        layout: 'layouts/main'
+    });
 });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -1,0 +1,59 @@
+<%- include("../partials/header", { user: user }) %>
+<link rel="stylesheet" href="/assets/css/edit.css">
+<div class="custom-container">
+    <h1>Edit Product</h1>
+    <form action="/inventory/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+        <div class="custom-form-group">
+            <label for="title" class="custom-label">Title</label>
+            <input type="text" class="custom-input" id="title" name="title" value="<%= product.title %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="description" class="custom-label">Description</label>
+            <textarea class="custom-textarea" id="description" name="description" rows="3" required><%= product.description %></textarea>
+        </div>
+        <div class="custom-form-group">
+            <label for="category" class="custom-label">Category</label>
+            <input type="text" class="custom-input" id="category" name="category" value="<%= product.category %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="price" class="custom-label">Price</label>
+            <input type="number" class="custom-input" id="price" name="price" step="0.01" min="0.01" value="<%= product.price %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="salePrice" class="custom-label">Sale Price (Optional)</label>
+            <input type="number" class="custom-input" id="salePrice" name="salePrice" step="0.01" min="0.01" value="<%= product.salePrice %>">
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingWeight" class="custom-label">Shipping Weight (kg)</label>
+            <input type="number" class="custom-input" id="shippingWeight" name="shippingWeight" min="1" value="<%= product.shippingWeight %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingWidth" class="custom-label">Shipping Width (cm)</label>
+            <input type="number" class="custom-input" id="shippingWidth" name="shippingWidth" min="1" value="<%= product.shippingWidth %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingLength" class="custom-label">Shipping Length (cm)</label>
+            <input type="number" class="custom-input" id="shippingLength" name="shippingLength" min="1" value="<%= product.shippingLength %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingHeight" class="custom-label">Shipping Height (cm)</label>
+            <input type="number" class="custom-input" id="shippingHeight" name="shippingHeight" min="1" value="<%= product.shippingHeight %>" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="image" class="custom-label">Product Image</label>
+            <% if (product.imageUrl) { %>
+                <div class="custom-img-preview">
+                    <img src="<%= product.imageUrl %>" alt="Current product image" class="custom-img">
+                </div>
+            <% } %>
+            <input type="file" class="custom-input" id="image" name="image" accept="image/jpeg,image/png,image/gif">
+            <div class="custom-form-text">Only JPG, PNG, and GIF images are allowed. Leave empty to keep current image.</div>
+        </div>
+        <div class="custom-form-group">
+            <input type="checkbox" class="custom-checkbox" id="featured" name="featured" <%= product.featured ? 'checked' : '' %>>
+            <label class="custom-label" for="featured">Featured Product</label>
+        </div>
+        <button type="submit" class="custom-btn">Update Product</button>
+        <a href="/inventory/list" class="custom-btn secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,84 @@
+<%- include("../partials/header", { user: user }) %>
+<link rel="stylesheet" href="/assets/css/add.css">
+<div class="custom-container">
+    <h1>Add New Product</h1>
+    <% if (error) { %>
+        <div class="custom-alert custom-alert-danger">
+            <%= error %>
+        </div>
+    <% } %>
+    <form action="/inventory/add" method="POST" enctype="multipart/form-data">
+        <div class="custom-form-group">
+            <label for="title" class="custom-label">Title</label>
+            <input type="text" class="custom-input" id="title" name="title" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="description" class="custom-label">Description</label>
+            <textarea class="custom-textarea" id="description" name="description" rows="3" required></textarea>
+        </div>
+        <div class="custom-form-group">
+            <label for="category" class="custom-label">Category</label>
+            <input type="text" class="custom-input" id="category" name="category" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="price" class="custom-label">Price</label>
+            <input type="number" class="custom-input" id="price" name="price" step="0.01" min="0.01" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="salePrice" class="custom-label">Sale Price (Optional)</label>
+            <input type="number" class="custom-input" id="salePrice" name="salePrice" step="0.01" min="0.01">
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingWeight" class="custom-label">Shipping Weight (kg)</label>
+            <input type="number" class="custom-input" id="shippingWeight" name="shippingWeight" min="1" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingWidth" class="custom-label">Shipping Width (cm)</label>
+            <input type="number" class="custom-input" id="shippingWidth" name="shippingWidth" min="1" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingLength" class="custom-label">Shipping Length (cm)</label>
+            <input type="number" class="custom-input" id="shippingLength" name="shippingLength" min="1" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="shippingHeight" class="custom-label">Shipping Height (cm)</label>
+            <input type="number" class="custom-input" id="shippingHeight" name="shippingHeight" min="1" required>
+        </div>
+        <div class="custom-form-group">
+            <label for="image" class="custom-label">Product Image</label>
+            <input type="file" class="custom-input" id="image" name="image" accept="image/*">
+            <div class="image-preview-container">
+                <img id="imagePreview" class="image-preview" style="display: none;">
+            </div>
+        </div>
+        <div class="custom-form-group">
+            <label class="custom-label">
+                <input type="checkbox" name="featured" id="featured">
+                Featured Product
+            </label>
+        </div>
+        <div class="custom-btn-group">
+            <button type="submit" class="custom-btn custom-btn-primary">Add Product</button>
+            <a href="/inventory/list" class="custom-btn custom-btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Image preview functionality
+    document.getElementById('image').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        const file = e.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>

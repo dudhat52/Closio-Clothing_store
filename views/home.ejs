@@ -1,3 +1,5 @@
+<%- include('partials/navbar') %>
+
 <!-- Hero Section -->
 <div class="hero-section">
     <div class="red-box"></div>
@@ -56,8 +58,133 @@
 
 <h3>Don't Miss Out on These Picks</h3>
 
-<div class="product-list">
-    <% featuredProducts.forEach(product => { %>
-        <%- include('partials/product', {product}) %>
-    <% }) %>
+<div class="product-carousel">
+    <button class="carousel-btn prev-btn" aria-label="Previous">&#8249;</button>
+    <div class="product-list">
+        <% if (products && products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <%- include('partials/product', {product, homeCard: true}) %>
+            <% }) %>
+        <% } else { %>
+            <div class="empty-state">
+                <p>No featured products available.</p>
+            </div>
+        <% } %>
+    </div>
+    <button class="carousel-btn next-btn" aria-label="Next">&#8250;</button>
 </div>
+
+<style>
+.product-carousel {
+    position: relative;
+    width: 100%;
+    margin: 40px 0;
+    padding: 0;
+    background: #f8f8f8;
+}
+
+.product-list {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 30px;
+    padding: 30px 80px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.product-list::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+@media (max-width: 768px) {
+    .product-list {
+        padding: 20px 60px;
+        gap: 20px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .prev-btn {
+        left: 10px;
+    }
+
+    .next-btn {
+        right: 10px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productList = document.querySelector('.product-list');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    
+    if (!productList || !prevBtn || !nextBtn) return;
+
+    const scrollAmount = 450; // Increased scroll amount for bigger cards
+
+    prevBtn.addEventListener('click', () => {
+        productList.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        productList.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    // Hide buttons at scroll limits
+    productList.addEventListener('scroll', () => {
+        const scrollLeft = productList.scrollLeft;
+        const maxScroll = productList.scrollWidth - productList.clientWidth;
+        
+        prevBtn.style.opacity = scrollLeft <= 0 ? '0.5' : '1';
+        nextBtn.style.opacity = scrollLeft >= maxScroll ? '0.5' : '1';
+    });
+});
+</script>

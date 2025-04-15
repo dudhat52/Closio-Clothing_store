@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/assets/css/footer.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: white;
+      padding: 20px;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      margin: 0;
+      font-size: 20px;
+      color: black;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: black;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: capitalize;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    nav a:hover {
+        color: #808080;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="/">Inventory Management System</a>
+    <nav>
+      <a href="/inventory/list">Inventory</a>
+      <a href="/cart">My Cart</a>
+      <a href="/">Logout</a>
+    </nav>
+  </header>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<%- include("../partials/header", { user: user }) %>
+<div class="inventory-container">
+    <div class="inventory-header">
+        <div class="inventory-title">
+            <h1>Product List</h1>
+        </div>
+        <div class="inventory-actions">
+            <% if (user) { %>
+                <button onclick="window.location.href='/load-data/products'" class="action-button">Load Sample Data</button>
+                <button onclick="window.location.href='/inventory/add'" class="action-button">Add New Product</button>
+            <% } %>
+        </div>
+    </div>
+
+    <% if (products && products.length > 0) { %>
+        <div class="product-list">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                    <div class="product-info">
+                        <h3 class="product-title"><%= product.title %></h3>
+                        <div class="product-price">
+                            <% if (product.salePrice) { %>
+                                <span class="original-price">$<%= product.price.toFixed(2) %></span>
+                                <span class="sale-price">$<%= product.salePrice.toFixed(2) %></span>
+                            <% } else { %>
+                                <span>$<%= product.price.toFixed(2) %></span>
+                            <% } %>
+                        </div>
+                        <div class="product-category"><%= product.category %></div>
+                        <% if (user) { %>
+                        <div class="product-actions">
+                            <button onclick="window.location.href='/inventory/edit/<%= product._id %>'" class="action-button">Edit</button>
+                            <button onclick="if(confirm('Are you sure you want to delete this product?')) window.location.href='/inventory/remove/<%= product._id %>'" class="action-button">Delete</button>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <div class="empty-state-icon">📦</div>
+            <h2>No Products Found</h2>
+            <p>There are no products in the inventory yet. Add your first product to get started!</p>
+            <% if (user) { %>
+                <button onclick="window.location.href='/inventory/add'" class="action-button">Add New Product</button>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+  

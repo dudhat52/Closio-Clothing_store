@@ -1,0 +1,92 @@
+/* Styles for the edit product page */
+
+.custom-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.custom-form-group {
+    margin-bottom: 15px;
+}
+
+.custom-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.custom-input, .custom-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.custom-textarea {
+    resize: vertical;
+}
+
+.custom-img-preview {
+    margin-bottom: 10px;
+}
+
+.custom-img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.custom-form-text {
+    font-size: 0.875rem;
+    color: #777;
+}
+
+.custom-checkbox {
+    margin-right: 10px;
+}
+
+.custom-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-btn:hover {
+    background-color: #0056b3;
+}
+
+.custom-btn.secondary {
+    background-color: #6c757d;
+}
+
+.custom-btn.secondary:hover {
+    background-color: #5a6268;
+}
+
+.custom-alert.danger {
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+} 

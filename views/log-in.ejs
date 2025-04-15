@@ -1,15 +1,35 @@
+<%- include('./partials/navbar') %>
 <div class="auth-container">
   <h2>Log In</h2>
-  <form id="loginForm" action="/auth/login" method="POST">
-    <div>
-      <input type="text" id="email" name="email" placeholder="Email" required>
+  <form id="loginForm" action="/auth/log-in" method="POST">
+    <div class="input-container">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Email" required>
       <div id="emailError" style="color: red; font-size: 0.875rem;"></div>
     </div>
-    <div>
+    
+    <div class="input-container">
+      <label for="password">Password</label>
       <input type="password" id="password" name="password" placeholder="Password" required>
       <div id="passwordError" style="color: red; font-size: 0.875rem;"></div>
     </div>
+
+    <div class="role-selection" style="display: flex; gap: 10px; align-items: center;">
+      <label>
+        <input type="radio" name="role" value="clerk"> Clerk
+      </label>
+      <label>
+        <input type="radio" name="role" value="customer"> Customer
+      </label>
+    </div>
+
     <button type="submit">Continue</button>
+
+    <div class="error-message">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <p style="color: red;"><%= error %></p>
+      <% } %>
+    </div>
   </form>
 </div>
 
@@ -36,7 +56,7 @@
 
     // Validate password
     if (!passwordRegex.test(password)) {
-      passwordError.textContent = 'Password must be 8 to 12 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one symbol.';
+      passwordError.textContent = 'Please enter a Valid password.';
       isValid = false;
     }
 

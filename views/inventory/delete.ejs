@@ -1,0 +1,37 @@
+<%- include("../partials/header", { user: user }) %>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h1>Delete Product</h1>
+        </div>
+        <div class="card-body">
+            <p>Are you sure you want to delete the following product?</p>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="<%= product.imageUrl %>" class="img-fluid rounded-start" alt="<%= product.title %>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= product.title %></h5>
+                            <p class="card-text"><%= product.description %></p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Category: <%= product.category %><br>
+                                    Price: $<%= product.price.toFixed(2) %>
+                                    <% if (product.salePrice) { %>
+                                        <br>Sale Price: $<%= product.salePrice.toFixed(2) %>
+                                    <% } %>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="/inventory/remove/<%= product._id %>" method="POST">
+                <button type="submit" class="btn btn-danger">Delete Product</button>
+                <a href="/inventory/list" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

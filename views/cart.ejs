@@ -1,0 +1,88 @@
+<%- include('./partials/header', {title: 'Shopping Cart'}) %>
+<link rel="stylesheet" href="assets/css/cart.css">
+
+<div class="cart-page">
+    <div class="cart-container">
+        <h1 class="page-title">Shopping Cart</h1>
+
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div class="success-message">
+                <div class="success-icon">✓</div>
+                <p>Order placed successfully! Thank you for your purchase.</p>
+                <a href="/" class="button-link">Continue Shopping</a>
+            </div>
+        <% } else if (!cart || cart.items.length === 0) { %>
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added anything to your cart yet.</p>
+                <a href="/" class="button-link primary">Start Shopping</a>
+            </div>
+        <% } else { %>
+            <div class="cart-content">
+                <div class="cart-items">
+                    <% cart.items.forEach(item => { %>
+                        <% if (item.productId) { %>
+                            <div class="cart-item">
+                                <div class="item-image">
+                                    <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.title %>">
+                                </div>
+                                <div class="item-details">
+                                    <h3 class="item-title"><%= item.productId.title %></h3>
+                                    <div class="price-container">
+                                        <% if (item.productId.salePrice) { %>
+                                            <span class="original-price">$<%= item.productId.price.toFixed(2) %></span>
+                                            <span class="sale-price">$<%= item.productId.salePrice.toFixed(2) %></span>
+                                        <% } else { %>
+                                            <span class="regular-price">$<%= item.productId.price.toFixed(2) %></span>
+                                        <% } %>
+                                    </div>
+                                    
+                                    <div class="item-controls">
+                                        <form action="/cart/update" method="POST" class="quantity-form">
+                                            <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                                            <div class="quantity-controls">
+                                                <button type="submit" name="action" value="decrease" class="quantity-btn">−</button>
+                                                <span class="quantity"><%= item.quantity %></span>
+                                                <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
+                                            </div>
+                                        </form>
+                                        
+                                        <form action="/cart/remove" method="POST" class="remove-form">
+                                            <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                                            <button type="submit" class="remove-btn">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }); %>
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span>$<%= cart.subtotal.toFixed(2) %></span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tax (13%)</span>
+                            <span>$<%= cart.tax.toFixed(2) %></span>
+                        </div>
+                        <div class="summary-item total">
+                            <span>Total</span>
+                            <span>$<%= cart.total.toFixed(2) %></span>
+                        </div>
+                    </div>
+                    
+                    <form action="/cart/checkout" method="POST" class="checkout-form">
+                        <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                    </form>
+                    
+                    <a href="/" class="continue-shopping">Continue Shopping</a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>

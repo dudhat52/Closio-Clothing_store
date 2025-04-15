@@ -1,0 +1,252 @@
+/* Custom styles for Product List page */
+.custom-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-container h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+.empty-state h2 {
+    color: #1e293b;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.custom-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.custom-btn-primary {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.custom-btn-primary:hover {
+    background-color: #4338ca;
+    transform: translateY(-1px);
+}
+
+/* Product grid styles */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    color: #4f46e5;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.product-sale-price {
+    font-size: 0.9rem;
+    color: #64748b;
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+}
+
+.product-category {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .custom-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .custom-container h1 {
+        font-size: 2rem;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.custom-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0;
+}
+
+.custom-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #0056b3;
+}
+
+.custom-table-wrapper {
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.custom-table th, .custom-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.custom-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.custom-img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.custom-badge {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.custom-badge.success {
+    background-color: #28a745;
+}
+
+.custom-badge.secondary {
+    background-color: #6c757d;
+}
+
+.custom-btn-group .custom-btn {
+    margin-right: 5px;
+}
+
+.custom-btn.small {
+    padding: 5px 10px;
+    font-size: 0.875rem;
+}
+
+.custom-btn.danger {
+    background-color: #dc3545;
+}
+
+.custom-btn.danger:hover {
+    background-color: #c82333;
+} 
