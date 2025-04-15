@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo');
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
+
 const authRoutes = require("./routes/auth");
 const inventoryRoutes = require("./routes/inventoryRoutes");
 const loadDataRoutes = require("./routes/loadDataRoutes");
@@ -18,6 +19,9 @@ const app = express();
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB connected"))
     .catch(err => console.error("❌ MongoDB connection error:", err));
+
+// Trust proxy for Vercel (required for secure cookies to work)
+app.set('trust proxy', 1);
 
 // Set up EJS with layouts
 app.set("view engine", "ejs");
@@ -36,16 +40,17 @@ app.use(fileUpload());
 
 // Session configuration
 app.use(session({
-    secret: "secureSecret",
+    secret: process.env.SESSION_SECRET || "secureSecret",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URI,
-        ttl: 24 * 60 * 60 // Session TTL of 1 day
+        ttl: 24 * 60 * 60 // 1 day
     }),
     cookie: {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
 }));
@@ -57,27 +62,25 @@ app.use((req, res, next) => {
     next();
 });
 
-// Auth routes should come first
+// Auth routes
 app.use("/auth", authRoutes);
 
-// Protected routes
+// Redirect to login if no session and trying to access protected routes
 app.use((req, res, next) => {
-    // Paths that don't require authentication
     const publicPaths = ['/log-in', '/sign-up', '/'];
-    
     if (!req.session.user && !publicPaths.includes(req.path)) {
         return res.redirect('/auth/log-in');
     }
     next();
 });
 
-// Routes
+// Main routes
 app.use("/", generalController);
 app.use("/inventory", inventoryRoutes);
 app.use("/load-data", loadDataRoutes);
 app.use("/cart", cartRoutes);
 
-// 404 Handler - should be last
+// 404 Handler
 app.use((req, res) => {
     console.log('404 - Not Found:', req.path);
     res.status(404).render('404', {
