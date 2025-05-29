@@ -1,33 +1,33 @@
-Closio – The Elegance 🛍️
+## Closio – The Elegance 🛍️
 An elegant e-commerce platform built for showcasing and selling decorative items, featuring full-stack functionality with a creative front-end and a robust backend.
 
-🌐 Live Demo
+## 🌐 Live Demo
 https://closio-clothing-store-dish-dudhats-projects.vercel.app/
 
-📌 Features
+## 📌 Features
 🧾 Customer & Employee Roles
 
-Employees can add/edit/delete products
+## Employees can add/edit/delete products
 
 Customers can browse and purchase items
 
-✉️ Registration Mailer
+## ✉️ Registration Mailer
 
 Users receive confirmation email upon registering
 
-🎨 Creative UI
+## 🎨 Creative UI
 
 Built with EJS and custom CSS for a refined shopping experience
 
-🔐 Authentication & Middleware
+## 🔐 Authentication & Middleware
 
 Protected routes and role-based access using middleware
 
-📦 MongoDB Integration
+## 📦 MongoDB Integration
 
 Products, users, and orders stored in MongoDB database
 
-💻 Tech Stack
+## 💻 Tech Stack
 Frontend: EJS, CSS, JavaScript
 
 Backend: Node.js, Express.js
@@ -40,6 +40,6 @@ Authentication: Express Sessions + Middleware
 
 Architecture: MVC structure with controllers
 
-🙌 Acknowledgements
+## 🙌 Acknowledgements
 This project is part of my journey into full-stack development and exploring scalable, creative e-commerce architecture.
 
