@@ -3,13 +3,11 @@ const router = express.Router();
 const { Cart, Product, User } = require('../models');
 const nodemailer = require('nodemailer');
 
-// Debug middleware to log session
 router.use((req, res, next) => {
     console.log('Cart Route - Session User:', req.session.user);
     next();
 });
 
-// Middleware to check if user is logged in and is a customer
 const isCustomer = (req, res, next) => {
     if (!req.session.user || req.session.user.role !== 'customer') {
         return res.redirect('/auth/login');
@@ -17,7 +15,6 @@ const isCustomer = (req, res, next) => {
     next();
 };
 
-// Add item to cart
 router.post('/add', async (req, res) => {
     try {
         // Check if user is logged in
@@ -214,43 +211,20 @@ router.post('/update', async (req, res) => {
 // Place order
 router.post('/checkout', async (req, res) => {
     try {
-        if (!req.session.user || !req.session.user._id) {
-            return res.redirect('/log-in');
+        const cart = await Cart.findOne({ userId: req.session.user._id });
+        if (!cart) {
+            return res.status(404).send('Cart not found');
         }
 
-        const cart = await Cart.findOne({ userId: req.session.user._id })
-            .populate('items.productId');
+        // Process the order here
+        // ... order processing logic ...
 
-        if (!cart || cart.items.length === 0) {
-            return res.redirect('/cart');
-        }
-
-        let subtotal = 0;
-        let orderDetails = 'Order Details:\n\n';
-        
-        cart.items.forEach(item => {
-            if (item.productId) {
-                const price = item.productId.salePrice || item.productId.price;
-                const itemTotal = price * item.quantity;
-                subtotal += itemTotal;
-                
-                orderDetails += `${item.productId.title} - Quantity: ${item.quantity} - Price: $${price.toFixed(2)} - Total: $${itemTotal.toFixed(2)}\n`;
-            }
-        });
-
-        const tax = subtotal * 0.13; // 13% tax
-        const total = subtotal + tax;
-
-        orderDetails += `\nSubtotal: $${subtotal.toFixed(2)}\n`;
-        orderDetails += `Tax (13%): $${tax.toFixed(2)}\n`;
-        orderDetails += `Grand Total: $${total.toFixed(2)}\n`;
-
-        // Clear the cart
+        // Clear the cart after successful order
         cart.items = [];
         await cart.save();
 
-        // Redirect to cart with success message
-        res.redirect('/cart?order=success');
+        // Redirect to cart without success message
+        res.redirect('/cart');
     } catch (error) {
         console.error('Error during checkout:', error);
         res.status(500).send('Error processing checkout');

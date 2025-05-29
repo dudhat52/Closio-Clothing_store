@@ -48,26 +48,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         min: 0.01
     },
-    shippingWeight: {
-        type: Number,
-        required: true,
-        min: 1
-    },
-    shippingWidth: {
-        type: Number,
-        required: true,
-        min: 1
-    },
-    shippingLength: {
-        type: Number,
-        required: true,
-        min: 1
-    },
-    shippingHeight: {
-        type: Number,
-        required: true,
-        min: 1
-    },
     imageUrl: {
         type: String,
         required: true

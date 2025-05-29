@@ -37,8 +37,7 @@ const inventoryController = {
     // Add new product
     addProduct: async (req, res) => {
         try {
-            const { title, description, category, price, salePrice, shippingWeight, 
-                    shippingWidth, shippingLength, shippingHeight, featured } = req.body;
+            const { title, description, category, price, salePrice, featured } = req.body;
 
             // Handle file upload
             let imageUrl = "";
@@ -70,10 +69,6 @@ const inventoryController = {
                 category,
                 price: parseFloat(price),
                 salePrice: salePrice ? parseFloat(salePrice) : undefined,
-                shippingWeight: parseInt(shippingWeight),
-                shippingWidth: parseInt(shippingWidth),
-                shippingLength: parseInt(shippingLength),
-                shippingHeight: parseInt(shippingHeight),
                 imageUrl,
                 featured: featured === "on"
             });

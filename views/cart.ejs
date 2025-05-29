@@ -5,13 +5,7 @@
     <div class="cart-container">
         <h1 class="page-title">Shopping Cart</h1>
 
-        <% if (typeof success !== 'undefined' && success) { %>
-            <div class="success-message">
-                <div class="success-icon">✓</div>
-                <p>Order placed successfully! Thank you for your purchase.</p>
-                <a href="/" class="button-link">Continue Shopping</a>
-            </div>
-        <% } else if (!cart || cart.items.length === 0) { %>
+        <% if (!cart || cart.items.length === 0) { %>
             <div class="empty-cart">
                 <div class="empty-cart-icon">🛒</div>
                 <h2>Your cart is empty</h2>

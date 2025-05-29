@@ -1,37 +1,174 @@
 <%- include("../partials/header", { user: user }) %>
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
+<div class="delete-container">
+    <div class="delete-card">
+        <div class="delete-header">
             <h1>Delete Product</h1>
         </div>
-        <div class="card-body">
+        <div class="delete-body">
             <p>Are you sure you want to delete the following product?</p>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="<%= product.imageUrl %>" class="img-fluid rounded-start" alt="<%= product.title %>">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= product.title %></h5>
-                            <p class="card-text"><%= product.description %></p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Category: <%= product.category %><br>
-                                    Price: $<%= product.price.toFixed(2) %>
-                                    <% if (product.salePrice) { %>
-                                        <br>Sale Price: $<%= product.salePrice.toFixed(2) %>
-                                    <% } %>
-                                </small>
-                            </p>
-                        </div>
+            <div class="product-preview">
+                <div class="product-image">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                </div>
+                <div class="product-details">
+                    <h5><%= product.title %></h5>
+                    <p><%= product.description %></p>
+                    <div class="product-meta">
+                        <span>Category: <%= product.category %></span>
+                        <span>Price: $<%= product.price.toFixed(2) %></span>
+                        <% if (product.salePrice) { %>
+                            <span>Sale Price: $<%= product.salePrice.toFixed(2) %></span>
+                        <% } %>
                     </div>
                 </div>
             </div>
-            <form action="/inventory/remove/<%= product._id %>" method="POST">
-                <button type="submit" class="btn btn-danger">Delete Product</button>
-                <a href="/inventory/list" class="btn btn-secondary">Cancel</a>
-            </form>
+            <div class="delete-actions">
+                <form action="/inventory/remove/<%= product._id %>" method="POST">
+                    <button type="submit" class="delete-btn">Delete Product</button>
+                    <a href="/inventory/list" class="cancel-btn">Cancel</a>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+.delete-container {
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    padding: 0 20px;
+}
+
+.delete-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.delete-header {
+    background: #f8f8f8;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.delete-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.delete-body {
+    padding: 20px;
+}
+
+.product-preview {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+.product-image {
+    flex: 0 0 300px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-details h5 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.product-details p {
+    margin: 0 0 15px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-meta span {
+    color: #666;
+    font-size: 14px;
+}
+
+.delete-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.delete-btn, .cancel-btn {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+    .delete-container {
+        margin: 80px auto 20px;
+        padding: 0 15px;
+    }
+
+    .product-preview {
+        flex-direction: column;
+    }
+
+    .product-image {
+        flex: 0 0 auto;
+    }
+
+    .product-image img {
+        height: 250px;
+    }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+
+    .delete-btn, .cancel-btn {
+        width: 100%;
+    }
+}
+</style>

@@ -1,5 +1,4 @@
 const express = require("express");
-const productUtil = require("../Modules/product-util");
 const router = express.Router();
 const { Product } = require("../models");
 
@@ -26,19 +25,23 @@ router.get("/", async (req, res) => {
 
 // Sign-up route
 router.get("/sign-up", (req, res) => {
-    res.render("sign-up", { title: "Sign Up", errors: null });
+    res.render("sign-up", { 
+        title: "Sign Up", 
+        errors: null,
+        error_msg: req.flash('error_msg'),
+        success_msg: req.flash('success_msg')
+    });
 });
 
 // Log-in route
 router.get("/log-in", (req, res) => {
-    res.render("log-in", { title: "Log In", errors: null });
-});
-
-exports.showLoginPage = (req, res) => {
-    res.render('log-in', {
-      error: req.flash('error') || ''
+    res.render("log-in", { 
+        title: "Log In", 
+        errors: null,
+        error_msg: req.flash('error_msg'),
+        success_msg: req.flash('success_msg')
     });
-  };
+});
 
 // Welcome route
 router.get("/welcome", (req, res) => {

@@ -1,17 +1,17 @@
 /* Cart Page Styles */
 :root {
-    --primary-color: #2ecc71;
-    --secondary-color: #2c3e50;
-    --accent-color: #3498db;
-    --danger-color: #e74c3c;
-    --background-color: #f8f9fa;
-    --border-color: #eee;
-    --text-color: #2c3e50;
-    --text-light: #666;
-    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --primary-color: #0c2340;         /* Navy Blue */
+    --secondary-color: #2c2c2c;       /* Dark Charcoal */
+    --accent-color: #ffffff;          /* White instead of gold */
+    --danger-color: #e74c3c;          /* Keep red for alerts/errors */
+    --background-color: #f9f5f0;      /* Cream White */
+    --border-color: #cccccc;          /* Light Gray */
+    --text-color: #2c2c2c;            /* Dark Charcoal */
+    --text-light: #666666;            /* Subtle muted text */
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --transition: all 0.2s ease;
-}
-
+  }
+    
 .cart-page {
     min-height: auto;
     background: var(--background-color);

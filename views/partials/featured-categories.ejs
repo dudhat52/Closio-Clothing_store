@@ -1,0 +1,45 @@
+<!-- Featured Categories Section -->
+<div class="featured-categories">
+    <div class="categories-container">
+        <div class="category-card women-card">
+            <div class="category-image">
+                <img src="/assets/Images/11.jpeg" alt="Women's Fashion">
+                <div class="image-overlay">
+                    <span class="overlay-text">ELEGANCE</span>
+                </div>
+            </div>
+            <div class="category-content">
+                <h3>Women's Fashion</h3>
+                <p>Discover the latest trends in women's clothing</p>
+                <a href="#women-collection" class="category-link" onclick="scrollToSection('women-collection')">Shop Women</a>
+            </div>
+        </div>
+        <div class="category-card men-card">
+            <div class="category-image">
+                <img src="/assets/Images/11.jpeg" alt="Men's Fashion">
+                <div class="image-overlay">
+                    <span class="overlay-text">REFINEMENT</span>
+                </div>
+            </div>
+            <div class="category-content">
+                <h3>Men's Fashion</h3>
+                <p>Explore our collection of men's apparel</p>
+                <a href="#men-collection" class="category-link" onclick="scrollToSection('men-collection')">Shop Men</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+            top: sectionPosition - navbarHeight,
+            behavior: 'smooth'
+        });
+    }
+}
+</script> 

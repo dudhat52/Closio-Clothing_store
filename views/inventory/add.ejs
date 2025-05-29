@@ -1,7 +1,7 @@
 <%- include("../partials/header", { user: user }) %>
 <link rel="stylesheet" href="/assets/css/add.css">
 <div class="custom-container">
-    <h1>Add New Product</h1>
+    <h1 style="color: #0c2340;">Add New Product</h1>
     <% if (error) { %>
         <div class="custom-alert custom-alert-danger">
             <%= error %>
@@ -27,22 +27,6 @@
         <div class="custom-form-group">
             <label for="salePrice" class="custom-label">Sale Price (Optional)</label>
             <input type="number" class="custom-input" id="salePrice" name="salePrice" step="0.01" min="0.01">
-        </div>
-        <div class="custom-form-group">
-            <label for="shippingWeight" class="custom-label">Shipping Weight (kg)</label>
-            <input type="number" class="custom-input" id="shippingWeight" name="shippingWeight" min="1" required>
-        </div>
-        <div class="custom-form-group">
-            <label for="shippingWidth" class="custom-label">Shipping Width (cm)</label>
-            <input type="number" class="custom-input" id="shippingWidth" name="shippingWidth" min="1" required>
-        </div>
-        <div class="custom-form-group">
-            <label for="shippingLength" class="custom-label">Shipping Length (cm)</label>
-            <input type="number" class="custom-input" id="shippingLength" name="shippingLength" min="1" required>
-        </div>
-        <div class="custom-form-group">
-            <label for="shippingHeight" class="custom-label">Shipping Height (cm)</label>
-            <input type="number" class="custom-input" id="shippingHeight" name="shippingHeight" min="1" required>
         </div>
         <div class="custom-form-group">
             <label for="image" class="custom-label">Product Image</label>

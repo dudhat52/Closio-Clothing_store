@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <link rel="stylesheet" href="/assets/css/footer.css">
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -16,18 +18,20 @@
     }
 
     header {
-      background-color: white;
-      padding: 20px;
-      color: black;
+      background-color: #0c2340;
+      color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
     }
 
     header a {
       margin: 0;
       font-size: 20px;
-      color: black;
+      color: white;
       cursor: pointer;
       text-transform: uppercase;
     }
@@ -38,24 +42,24 @@
     }
 
     nav a {
-      color: black;
+      color: white;
       font-size: 16px;
       font-weight: bold;
       text-decoration: none;
       text-transform: capitalize;
       cursor: pointer;
-      transition: 0.5s;
+      transition: color 0.3s;
     }
 
     nav a:hover {
-        color: #808080;
+      color: #808080;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="/">Inventory Management System</a>
+    <a>Inventory Management System</a>
     <nav>
       <a href="/inventory/list">Inventory</a>
       <a href="/cart">My Cart</a>

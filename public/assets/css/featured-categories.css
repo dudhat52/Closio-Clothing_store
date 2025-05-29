@@ -1,0 +1,254 @@
+/* Featured Categories Section */
+.featured-categories {
+    padding: 3rem 0;
+    background: transparent;
+    margin: 0;
+}
+
+.categories-container {
+    max-width: 100vw;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0;
+    background: transparent;
+}
+
+.category-card {
+    position: relative;
+    background: transparent;
+    border-radius: 0;
+    overflow: hidden;
+    height: 600px;
+    width: 100%;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.category-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.category-card:hover .category-image img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    top: -20%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    color: white;
+    font-size: 2.5rem;
+    font-family: 'Times New Roman', serif;
+    font-weight: 300;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .overlay-text {
+    transform: translateY(0);
+}
+
+.category-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(1px);
+}
+
+.category-card h3 {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.category-card p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.category-link {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    border: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.category-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.category-link:hover::after {
+    transform: scaleX(1);
+}
+
+.category-link:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.category-card:hover {
+    /* No shadow on hover */
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .categories-container {
+        gap: 1rem;
+    }
+
+    .category-card {
+        height: 500px;
+    }
+
+    .overlay-text {
+        font-size: 2rem;
+        letter-spacing: 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    .featured-categories {
+        padding: 0;
+    }
+
+    .categories-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .category-card {
+        height:400px;
+    }
+
+    .category-content {
+        padding: 1.5rem;
+    }
+
+    .category-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .category-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .category-link {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.8rem;
+    }
+
+    .overlay-text {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-categories {
+        padding: 0.5rem 0;
+    }
+    .categories-container {
+        gap: 0.5rem;
+        max-width: 90vw;
+        margin: 0 auto;
+    }
+    .category-card {
+        height: 400px;
+        width: 90vw;
+        margin: 0 auto;
+    }
+    .category-content {
+        padding: 1rem;
+        bottom: 0;
+        width: 100%;
+    }
+    .category-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.3rem;
+    }
+    .category-card p {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .category-link {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .overlay-text {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    .image-overlay {
+        top: -20%;
+    }
+    .category-image img {
+        object-position: center;
+    }
+}
