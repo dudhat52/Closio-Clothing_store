@@ -1,82 +1,221 @@
-<%- include('./partials/header', {title: 'Shopping Cart'}) %>
-<link rel="stylesheet" href="assets/css/cart.css">
+<%- include('./partials/navbar') %>
 
-<div class="cart-page">
-    <div class="cart-container">
-        <h1 class="page-title">Shopping Cart</h1>
+<div class="cart-container">
+    <h1>Shopping Cart</h1>
 
-        <% if (!cart || cart.items.length === 0) { %>
-            <div class="empty-cart">
-                <div class="empty-cart-icon">🛒</div>
-                <h2>Your cart is empty</h2>
-                <p>Looks like you haven't added anything to your cart yet.</p>
-                <a href="/" class="button-link primary">Start Shopping</a>
-            </div>
-        <% } else { %>
-            <div class="cart-content">
-                <div class="cart-items">
-                    <% cart.items.forEach(item => { %>
-                        <% if (item.productId) { %>
-                            <div class="cart-item">
-                                <div class="item-image">
-                                    <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.title %>">
-                                </div>
-                                <div class="item-details">
-                                    <h3 class="item-title"><%= item.productId.title %></h3>
-                                    <div class="price-container">
-                                        <% if (item.productId.salePrice) { %>
-                                            <span class="original-price">$<%= item.productId.price.toFixed(2) %></span>
-                                            <span class="sale-price">$<%= item.productId.salePrice.toFixed(2) %></span>
-                                        <% } else { %>
-                                            <span class="regular-price">$<%= item.productId.price.toFixed(2) %></span>
-                                        <% } %>
-                                    </div>
-                                    
-                                    <div class="item-controls">
-                                        <form action="/cart/update" method="POST" class="quantity-form">
-                                            <input type="hidden" name="productId" value="<%= item.productId._id %>">
-                                            <div class="quantity-controls">
-                                                <button type="submit" name="action" value="decrease" class="quantity-btn">−</button>
-                                                <span class="quantity"><%= item.quantity %></span>
-                                                <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
-                                            </div>
-                                        </form>
-                                        
-                                        <form action="/cart/remove" method="POST" class="remove-form">
-                                            <input type="hidden" name="productId" value="<%= item.productId._id %>">
-                                            <button type="submit" class="remove-btn">Remove</button>
-                                        </form>
-                                    </div>
-                                </div>
+    <% if (!cart || cart.items.length === 0) { %>
+        <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added anything to your cart yet.</p>
+            <a href="/" class="start-shopping-btn">Start Shopping</a>
+        </div>
+    <% } else { %>
+        <div class="cart-content">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <% cart.items.forEach(item => { %>
+                    <% if (item.productId) { %>
+                        <div class="cart-item">
+                            <img src="<%= item.productId.imageUrl %>" alt="<%= item.productId.title %>">
+                            <div class="item-details">
+                                <h3><%= item.productId.title %></h3>
+                                <p>Quantity: <%= item.quantity %></p>
+                                <p class="item-price">
+                                    <% if (item.productId.salePrice) { %>
+                                        $<%= (item.productId.salePrice * item.quantity).toFixed(2) %>
+                                    <% } else { %>
+                                        $<%= (item.productId.price * item.quantity).toFixed(2) %>
+                                    <% } %>
+                                </p>
                             </div>
-                        <% } %>
-                    <% }); %>
-                </div>
-
-                <div class="cart-summary">
-                    <h2>Order Summary</h2>
-                    <div class="summary-items">
-                        <div class="summary-item">
-                            <span>Subtotal</span>
-                            <span>$<%= cart.subtotal.toFixed(2) %></span>
                         </div>
-                        <div class="summary-item">
-                            <span>Tax (13%)</span>
-                            <span>$<%= cart.tax.toFixed(2) %></span>
-                        </div>
-                        <div class="summary-item total">
-                            <span>Total</span>
-                            <span>$<%= cart.total.toFixed(2) %></span>
-                        </div>
-                    </div>
-                    
-                    <form action="/cart/checkout" method="POST" class="checkout-form">
-                        <button type="submit" class="checkout-btn">Proceed to Checkout</button>
-                    </form>
-                    
-                    <a href="/" class="continue-shopping">Continue Shopping</a>
-                </div>
+                    <% } %>
+                <% }); %>
             </div>
-        <% } %>
-    </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span>$<%= cart.subtotal.toFixed(2) %></span>
+                </div>
+                <div class="summary-line">
+                    <span>Tax (13%):</span>
+                    <span>$<%= cart.tax.toFixed(2) %></span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total:</span>
+                    <span>$<%= cart.total.toFixed(2) %></span>
+                </div>
+                
+                <a href="/orders/checkout" class="checkout-btn">Proceed to Checkout</a>
+            </div>
+        </div>
+    <% } %>
 </div>
+
+<%- include('./partials/footer') %>
+
+<style>
+.cart-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.cart-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.empty-cart-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty-cart h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.empty-cart p {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.start-shopping-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.start-shopping-btn:hover {
+    background: #0056b3;
+    color: white;
+}
+
+.cart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-details h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.item-details p {
+    margin: 0.25rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #333 !important;
+    font-size: 1rem !important;
+}
+
+.order-summary {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.order-summary h2 {
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.summary-line.total {
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 1px solid #ddd;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.checkout-btn:hover {
+    background: #0056b3;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .cart-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cart-item img {
+        align-self: center;
+    }
+}
+</style>

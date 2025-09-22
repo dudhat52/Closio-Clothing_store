@@ -1,0 +1,219 @@
+/* Minimal Authentication Pages CSS */
+
+body {
+  background: #f9f5f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Auth container */
+.auth-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  margin: 2rem auto;
+  flex: 1;
+}
+
+/* Header */
+.auth-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.auth-container .subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form styling */
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Input containers */
+.input-container {
+  margin-bottom: 1rem;
+}
+
+.input-container label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.input-container input,
+.input-container select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #333;
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.input-container input:focus,
+.input-container select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.input-container input::placeholder {
+  color: #999;
+}
+
+/* Role selection styling */
+.role-selection {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.role-selection label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #ffffff;
+  flex: 1;
+  justify-content: center;
+  transition: border-color 0.2s ease;
+}
+
+.role-selection label:hover {
+  border-color: #007bff;
+}
+
+.role-selection input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+.role-selection label:has(input:checked) {
+  border-color: #007bff;
+  background: #f8f9fa;
+}
+
+/* Submit button */
+.auth-container button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.auth-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Error messages */
+.error-message,
+.error-messages {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.error-message p,
+.error-messages li {
+  color: #721c24;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.error-messages {
+  list-style: none;
+  padding: 0.75rem;
+}
+
+.error-messages li {
+  margin-bottom: 0.25rem;
+}
+
+.error-messages li:last-child {
+  margin-bottom: 0;
+}
+
+/* Input error states */
+.input-container input.error,
+.input-container select.error {
+  border-color: #dc3545;
+}
+
+.input-container .error-text {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Link styling */
+.auth-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.auth-link a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-link a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Loading state */
+.auth-container button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .auth-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .role-selection {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

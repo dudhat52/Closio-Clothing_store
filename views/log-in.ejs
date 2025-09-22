@@ -1,47 +1,49 @@
-<style>
-  body{
-    background: #f9f5f0;
-  }
-</style>
+<link rel="stylesheet" href="/assets/css/auth.css">
 
 <div class="auth-bg">
   <%- include('./partials/navbar') %>
     <div class="auth-container">
-      <h2>Log In</h2>
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to your account to continue</p>
       <form id="loginForm" action="/auth/log-in" method="POST">
         <div class="input-container">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Email" required>
-          <div id="emailError" style="color: red; font-size: 0.875rem;"></div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          <span id="emailError" class="error-text"></span>
         </div>
 
         <div class="input-container">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" required>
-          <div id="passwordError" style="color: red; font-size: 0.875rem;"></div>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <span id="passwordError" class="error-text"></span>
         </div>
 
-        <div class="role-selection" style="display: flex; gap: 10px; align-items: center;">
+        <div class="role-selection">
           <label>
-            <input type="radio" name="role" value="clerk"> Clerk
+            <input type="radio" name="role" value="clerk">
+            <span>Clerk</span>
           </label>
           <label>
-            <input type="radio" name="role" value="customer"> Customer
+            <input type="radio" name="role" value="customer">
+            <span>Customer</span>
           </label>
         </div>
 
-        <button type="submit">Continue</button>
+        <button type="submit">Sign In</button>
 
         <div class="error-message">
           <% if (typeof error !=='undefined' && error) { %>
-            <p style="color: red;">
-              <%= error %>
-            </p>
+            <p><%= error %></p>
             <% } %>
         </div>
       </form>
+      
+      <div class="auth-link">
+        <p>Don't have an account? <a href="/auth/sign-up">Sign up here</a></p>
+      </div>
     </div>
 </div>
+
 
 </div>
 <script>
@@ -50,24 +52,31 @@
     const password = document.getElementById('password').value;
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 
-    // Reset error messages
+    // Reset error states
     emailError.textContent = '';
     passwordError.textContent = '';
+    emailInput.classList.remove('error');
+    passwordInput.classList.remove('error');
 
     let isValid = true;
 
     // Validate email
     if (!emailRegex.test(email)) {
       emailError.textContent = 'Please enter a valid email address.';
+      emailInput.classList.add('error');
       isValid = false;
     }
 
     // Validate password
     if (!passwordRegex.test(password)) {
-      passwordError.textContent = 'Please enter a Valid password.';
+      passwordError.textContent = 'Please enter a valid password.';
+      passwordInput.classList.add('error');
       isValid = false;
     }
 
@@ -75,4 +84,5 @@
       event.preventDefault();
     }
   });
+
 </script>

@@ -1,37 +1,58 @@
+<link rel="stylesheet" href="/assets/css/auth.css">
+
 <%- include('./partials/navbar') %>
 <div class="auth-container">
   <h2>Create Account</h2>
+  <p class="subtitle">Join us today and start your journey</p>
+  
   <% if (errors && errors.length > 0) { %>
     <ul class="error-messages">
       <% errors.forEach(error => { %>
-        <li style="color: red;"><%= error.msg %></li>
+        <li><%= error.msg %></li>
       <% }); %>
-  </ul>
+    </ul>
   <% } %>
+  
   <form id="signupForm" action="/auth/register" method="POST">
-    <div>
-      <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+    <div class="input-container">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
     </div>
-    <div>
-      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+    
+    <div class="input-container">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
     </div>
-    <div>
-      <input type="text" id="email" name="email" placeholder="Email" required>
-      <div id="emailError" style="color: red; font-size: 0.875rem;"></div>
+    
+    <div class="input-container">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      <span id="emailError" class="error-text"></span>
     </div>
-    <div>
-      <input type="password" id="password" name="password" placeholder="Password" required>
-      <div id="passwordError" style="color: red; font-size: 0.875rem;"></div>
+    
+    <div class="input-container">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+      <span id="passwordError" class="error-text"></span>
     </div>
-    <div>
-      <select id="role" name="role" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    
+    <div class="input-container">
+      <label for="role">Account Type</label>
+      <select id="role" name="role" required>
+        <option value="">Select account type</option>
         <option value="customer">Customer</option>
         <option value="clerk">Clerk</option>
       </select>
     </div>
+    
     <button type="submit">Create Account</button>
   </form>
+  
+  <div class="auth-link">
+    <p>Already have an account? <a href="/auth/log-in">Sign in here</a></p>
+  </div>
 </div>
+
 
 <script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
@@ -39,23 +60,31 @@
     const password = document.getElementById('password').value;
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 
+    // Reset error states
     emailError.textContent = '';
     passwordError.textContent = '';
+    emailInput.classList.remove('error');
+    passwordInput.classList.remove('error');
 
     let isValid = true;
 
     // Validate email
     if (!emailRegex.test(email)) {
       emailError.textContent = 'Please enter a valid email address.';
+      emailInput.classList.add('error');
       isValid = false;
     }
 
     // Validate password
     if (!passwordRegex.test(password)) {
-      passwordError.textContent = 'Password must be 8 to 12 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one symbol.';
+      passwordError.textContent = 'Password must be 8-12 characters with uppercase, lowercase, number, and symbol.';
+      passwordInput.classList.add('error');
       isValid = false;
     }
 

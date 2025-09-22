@@ -10,7 +10,7 @@ router.use((req, res, next) => {
 
 const isCustomer = (req, res, next) => {
     if (!req.session.user || req.session.user.role !== 'customer') {
-        return res.redirect('/auth/login');
+        return res.redirect('/auth/log-in');
     }
     next();
 };
@@ -20,7 +20,7 @@ router.post('/add', async (req, res) => {
         // Check if user is logged in
         if (!req.session.user || !req.session.user._id) {
             console.log('User not logged in');
-            return res.redirect('/log-in');
+            return res.redirect('/auth/log-in');
         }
 
         const { productId } = req.body;
@@ -36,7 +36,7 @@ router.post('/add', async (req, res) => {
         const user = await User.findById(req.session.user._id);
         if (!user) {
             console.error('User not found:', req.session.user._id);
-            return res.redirect('/log-in');
+            return res.redirect('/auth/log-in');
         }
 
         // Verify product exists
@@ -91,7 +91,7 @@ router.get('/', async (req, res) => {
         // Check if user is logged in
         if (!req.session.user || !req.session.user._id) {
             console.log('User not logged in');
-            return res.redirect('/log-in');
+            return res.redirect('/auth/log-in');
         }
 
         console.log('Fetching cart for user:', req.session.user._id);
@@ -170,7 +170,7 @@ router.post('/update', async (req, res) => {
     try {
         if (!req.session.user || !req.session.user._id) {
             console.log('User not logged in');
-            return res.redirect('/log-in');
+            return res.redirect('/auth/log-in');
         }
 
         const { productId, action } = req.body;
@@ -236,7 +236,7 @@ router.post('/remove', async (req, res) => {
     try {
         if (!req.session.user || !req.session.user._id) {
             console.log('User not logged in');
-            return res.redirect('/log-in');
+            return res.redirect('/auth/log-in');
         }
 
         const { productId } = req.body;

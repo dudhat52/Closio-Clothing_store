@@ -24,10 +24,13 @@
       <% } %>
       <% if (typeof user === 'undefined' || !user) { %>
         <li class="sidebar-divider"></li>
-        <li><a href="/log-in" onclick="hideSidebar()">Login</a></li>
-        <li><a href="/sign-up" onclick="hideSidebar()">Register</a></li>
+        <li><a href="/auth/log-in" onclick="hideSidebar()">Login</a></li>
+        <li><a href="/auth/sign-up" onclick="hideSidebar()">Register</a></li>
       <% } else { %>
         <li><span class="welcome-text">Welcome, <%= user.firstName %></span></li>
+        <% if (user.role === 'customer') { %>
+          <li><a href="/orders/history" onclick="hideSidebar()">Order History</a></li>
+        <% } %>
         <li><a href="/auth/logout" onclick="hideSidebar()">Logout</a></li>
       <% } %>
     </ul>
@@ -57,10 +60,13 @@
   <!-- User Options - Visible in desktop only -->
   <div class="user-options desktop-only">
     <% if (typeof user === 'undefined' || !user) { %>
-      <a href="/log-in">Login | </a>
-      <a href="/sign-up">Register</a>
+      <a href="/auth/log-in">Login | </a>
+      <a href="/auth/sign-up">Register</a>
     <% } else { %>
       <span class="welcome-text">Welcome, <%= user.firstName %></span>
+      <% if (user.role === 'customer') { %>
+        <a href="/orders/history"> | Order History</a>
+      <% } %>
       <a href="/auth/logout"> | Logout</a>
     <% } %>
   </div>

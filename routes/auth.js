@@ -17,18 +17,43 @@ router.get("/log-in", (req, res) => {
     });
 });
 
+router.get("/sign-up", (req, res) => {
+    res.render("sign-up", {
+        title: "Sign Up",
+        layout: "layouts/main",
+        errors: null
+    });
+});
+
 router.post("/log-in", async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.redirect('/log-in');
+            return res.render("log-in", {
+                title: "Log In",
+                layout: "layouts/main",
+                error: "Invalid email or password"
+            });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.redirect('/log-in');
+            return res.render("log-in", {
+                title: "Log In",
+                layout: "layouts/main",
+                error: "Invalid email or password"
+            });
+        }
+
+        // Check if the user's role matches the selected role
+        if (user.role !== role) {
+            return res.render("log-in", {
+                title: "Log In",
+                layout: "layouts/main",
+                error: "Invalid role selection"
+            });
         }
 
         req.session.user = {
@@ -52,17 +77,25 @@ router.post("/log-in", async (req, res) => {
         });
     } catch (error) {
         console.error("Login error:", error);
-        res.redirect('/log-in');
+        res.render("log-in", {
+            title: "Log In",
+            layout: "layouts/main",
+            error: "An error occurred during login"
+        });
     }
 });
 
 router.post("/register", async (req, res) => {
     try {
-        const { email, password, firstName, lastName } = req.body;
+        const { email, password, firstName, lastName, role } = req.body;
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            return res.redirect('/sign-up');
+            return res.render("sign-up", {
+                title: "Sign Up",
+                layout: "layouts/main",
+                errors: [{ msg: "Email already exists" }]
+            });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -71,7 +104,7 @@ router.post("/register", async (req, res) => {
             password: hashedPassword,
             firstName,
             lastName,
-            role: 'customer'
+            role: role || 'customer'
         });
 
         await user.save();
@@ -97,7 +130,11 @@ router.post("/register", async (req, res) => {
         });
     } catch (error) {
         console.error("Registration error:", error);
-        res.redirect('/sign-up');
+        res.render("sign-up", {
+            title: "Sign Up",
+            layout: "layouts/main",
+            errors: [{ msg: "An error occurred during registration" }]
+        });
     }
 });
 

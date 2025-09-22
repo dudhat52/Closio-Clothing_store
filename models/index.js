@@ -100,9 +100,13 @@ const User = mongoose.model('User', userSchema);
 const Product = mongoose.model('Product', productSchema);
 const Cart = mongoose.model('Cart', cartSchema);
 
+// Import Order model
+const Order = require('./orderModel');
+
 // Export models
 module.exports = {
     User,
     Product,
-    Cart
+    Cart,
+    Order
 }; 

@@ -10,11 +10,12 @@ const flash = require('connect-flash');
 const authRoutes = require("./routes/auth");
 const inventoryRoutes = require("./routes/inventoryRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const generalController = require("./controllers/generalController");
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/closio")
     .then(() => console.log("✅ MongoDB connected"))
     .catch(err => console.error("❌ MongoDB connection error:", err));
 
@@ -30,11 +31,11 @@ app.use(express.json());
 app.use(fileUpload());
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || "secureSecret",
+    secret: process.env.SESSION_SECRET || "your-secret-key-here",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI,
+        mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/closio",
         ttl: 24 * 60 * 60 // 1 day
     }),
     cookie: {
@@ -66,7 +67,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 
 app.use((req, res, next) => {
-    const publicPaths = ['/log-in', '/sign-up', '/'];
+    const publicPaths = ['/auth/log-in', '/auth/sign-up', '/'];
     if (!req.session.user && !publicPaths.includes(req.path)) {
         return res.redirect('/auth/log-in');
     }
@@ -76,6 +77,7 @@ app.use((req, res, next) => {
 app.use("/", generalController);
 app.use("/inventory", inventoryRoutes);
 app.use("/cart", cartRoutes);
+app.use("/orders", orderRoutes);
 app.use((req, res) => {
     console.log('404 - Not Found:', req.path);
     res.status(404).render('404', {
