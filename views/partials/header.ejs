@@ -62,6 +62,9 @@
     <a>Inventory Management System</a>
     <nav>
       <a href="/inventory/list">Inventory</a>
+      <% if (user && user.role === 'clerk') { %>
+        <a href="/inventory/orders">Orders</a>
+      <% } %>
       <a href="/cart">My Cart</a>
       <a href="/">Logout</a>
     </nav>

@@ -158,7 +158,8 @@ const orderController = {
             }
 
             const order = await Order.findById(req.params.id)
-                .populate('items.productId');
+                .populate('items.productId')
+                .populate('userId', 'firstName lastName email');
 
             if (!order || order.userId.toString() !== req.session.user._id.toString()) {
                 return res.status(404).render('error', {
@@ -176,6 +177,77 @@ const orderController = {
             });
         } catch (error) {
             console.error('Error in showOrderDetails:', error);
+            res.status(500).render('error', {
+                title: 'Error',
+                message: 'Error loading order details',
+                layout: 'layouts/main'
+            });
+        }
+    },
+
+    // Show all orders for admin/clerk
+    showAllOrders: async (req, res) => {
+        try {
+            if (!req.session.user || req.session.user.role !== 'clerk') {
+                return res.status(403).render('error', {
+                    title: 'Access Denied',
+                    message: 'You are not authorized to view this page',
+                    layout: 'layouts/main'
+                });
+            }
+
+            const orders = await Order.find()
+                .sort({ orderDate: -1 })
+                .populate('userId', 'firstName lastName email')
+                .populate('items.productId');
+
+            res.render('inventory/orders', {
+                title: 'All Orders',
+                layout: 'layouts/main',
+                user: req.session.user,
+                orders: orders
+            });
+        } catch (error) {
+            console.error('Error in showAllOrders:', error);
+            res.status(500).render('error', {
+                title: 'Error',
+                message: 'Error loading orders',
+                layout: 'layouts/main'
+            });
+        }
+    },
+
+    // Show order details for admin/clerk
+    showAdminOrderDetails: async (req, res) => {
+        try {
+            if (!req.session.user || req.session.user.role !== 'clerk') {
+                return res.status(403).render('error', {
+                    title: 'Access Denied',
+                    message: 'You are not authorized to view this page',
+                    layout: 'layouts/main'
+                });
+            }
+
+            const order = await Order.findById(req.params.id)
+                .populate('items.productId')
+                .populate('userId', 'firstName lastName email');
+
+            if (!order) {
+                return res.status(404).render('error', {
+                    title: 'Not Found',
+                    message: 'Order not found',
+                    layout: 'layouts/main'
+                });
+            }
+
+            res.render('inventory/order-details', {
+                title: 'Order Details',
+                layout: 'layouts/main',
+                user: req.session.user,
+                order: order
+            });
+        } catch (error) {
+            console.error('Error in showAdminOrderDetails:', error);
             res.status(500).render('error', {
                 title: 'Error',
                 message: 'Error loading order details',
